@@ -16,7 +16,7 @@ function show_help {
   echo -e ${CPH}"\n+-----------------+"${NC}
   echo -e ${CPH}"|Profihost AG 2020|"${NC}
   echo -e ${CPH}"+-----------------+\n"${NC}
-  echo -e "Usage: $0 [options [parameter]]\n"
+  echo -e "Usage: $0 (for Shopware 6) [options [parameter]]\n"
   echo -e "Options:"
   echo -e "-bw|--rsync-bwlimit [KB/s], Set rsync Bandwith Limit in KBytes per second. See rsync Manuel. Default: 50000"
   echo -e "-h |--help, Print what you see"
@@ -73,8 +73,6 @@ if [[ "$( echo ${prod_dir} | wc -c )" -ge "2" ]]; then
   done
   x_re
 fi
-
-echo $dev_dir
 
 if [[ "$( echo ${dev_dir} | wc -c )" -ge "2" ]]; then
   echo "Start moving caches -> dev"
