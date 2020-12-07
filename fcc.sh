@@ -1,6 +1,5 @@
 #!/bin/bash
-#Profihost AG 2020
-#@lroehrs
+#@lroehrs / Profihost AG 2020
 
 NC='\033[0;m'
 CR='\033[0;31m'
@@ -51,7 +50,7 @@ done
 prod_dir="$(find . -maxdepth 1  -type d -name "prod_*")"
 dev_dir="$(find . -maxdepth 1 -type d -name "dev_*")"
 
-if [[ "$( echo ${prod_dir} | wc -l)" -eq "0" ]] && [[ "$(${dev_dir} | wc -l)" -eq "0" ]]; then
+if [[ "$( echo ${prod_dir} | wc -c )" -le "1" ]] && [[ "$(${dev_dir} | wc -c)" -le "1" ]]; then
   echo -e ${CR}"ERROR: Couldn't find cache directory.. Exit!"${NC} >&2; exit 1;
 fi
 
@@ -65,8 +64,8 @@ if [[ ! -d "$fcc_del" ]]; then
   mkdir $fcc_del
 fi
 
-num="0"
-if [[ "$( echo ${prod_dir}] | wc -l)" -ge "1" ]]; then
+num="1"
+if [[ "$( echo ${prod_dir} | wc -c )" -ge "2" ]]; then
   echo "Start moving caches -> prod"
   for prod in ${prod_dir}; do
     mv ${prod} ${fcc_del}/${num}
@@ -75,7 +74,9 @@ if [[ "$( echo ${prod_dir}] | wc -l)" -ge "1" ]]; then
   x_re
 fi
 
-if [[ "$( echo ${dev_dir} | wc -l)" -ge "1" ]]; then
+echo $dev_dir
+
+if [[ "$( echo ${dev_dir} | wc -c )" -ge "2" ]]; then
   echo "Start moving caches -> dev"
   for dev in ${dev_dir}; do
     mv ${dev} ${fcc_del}/${num}
